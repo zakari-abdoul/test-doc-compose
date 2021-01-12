@@ -1,0 +1,47 @@
+version: '3.3'
+services:
+  digidex_api:
+    build: .
+    command: python /src/manage.py runserver 0.0.0.0:8093
+    container_name: sonatel_digidex.com
+    restart: always
+    volumes:
+      - .:/src
+    env_file:
+      - digidex/.env
+    ports:
+      - "8093:8093"
+    depends_on:
+      - digidex_db
+    networks:
+      - digidex-network
+  digidex_db:
+    restart: always
+    image: postgres:12.0-alpine
+    container_name: db.sonatel_digidex.com
+    ports:
+      - "5442:5442"
+    env_file:
+      - digidex/.env
+    volumes:
+      - postgres_digidex_data:/var/lib/postgresql/data/
+    networks:
+      - digidex-network
+  digidex_pgadmin:
+    restart: always
+    image: dpage/pgadmin4
+    container_name: pgadmin.sonatel_digidex.com
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@sonatel_digidex.com"
+      PGADMIN_DEFAULT_PASSWORD: "@dmin123"
+    ports:
+      - "8094:8094"
+    depends_on:
+      - digidex_db
+    networks:
+      - digidex-network
+networks:
+  digidex-network:
+    driver: bridge
+volumes:
+  postgres_digidex_data: # Define seperate volume for Postgres data
