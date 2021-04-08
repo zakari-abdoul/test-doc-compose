@@ -34,7 +34,7 @@ SECRET_KEY = '!ueej^uh#sckgnv-5-)k*!kx)rz^o^%qx$66_h3jtose(ydx9o'
 DEBUG = True
 
 if DEBUG is True:
-    ALLOWED_HOSTS = ['192.168.1.36', '192.168.1.4', '127.0.0.1', '725770131f5f.ngrok.io']
+    ALLOWED_HOSTS = ['10.137.20.112','127.0.0.1']
     API_BASE_URL = 'http://localhost:8099'
 else:
     ALLOWED_HOSTS = ['.sonatel.com']
